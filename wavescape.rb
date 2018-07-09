@@ -1,6 +1,7 @@
 require "fileutils"
 require "mechanize"
 require "digest"
+IMAGE_DIR = "images"
 page = 
   pic = 
   agent = Mechanize.new{ |a|
@@ -13,6 +14,7 @@ page =
   ["https://www.wavescape.co.za/tools/webcams/noordhoek.html", "noordhoek"],
   ["https://www.wavescape.co.za/tools/webcams/kalk-bay.html", "kalk-bay"]
 ].map do |page, pic|
+  pic = File.join(IMAGE_DIR, pic)
   Thread.new do 
     begin
       FileUtils.mkdir_p(pic)
@@ -47,3 +49,5 @@ page =
     end
   end
 end.map(&:join)
+
+`open #{IMAGE_DIR}`
